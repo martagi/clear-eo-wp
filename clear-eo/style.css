@@ -553,9 +553,14 @@ html:has(dialog[open]) { overflow: hidden; }
 .card-sub { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: -4px 0 0; font-size: 13.5px; color: var(--muted); }
 .card-sub span { display: inline-flex; align-items: center; gap: 6px; }
 .card-sub svg { width: 15px; height: 15px; flex: none; }
-.card-sub .sub-link { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-weight: 600; text-decoration: none; }
-.card-sub .sub-link:hover { text-decoration: underline; text-underline-offset: 3px; }
-.card-sub .sub-link svg:last-child { width: 12px; height: 12px; }
+.article-sub { gap: 8px 0; line-height: 1.2; }
+.article-sub > span, .article-sub > a { display: inline-flex; align-items: center; gap: 7px; }
+.article-sub svg { width: 16px; height: 16px; flex: none; }
+/* The event website, set apart from the location by a thin divider */
+.article-sub > span + .sub-link { margin-left: 18px; padding-left: 18px; border-left: 1px solid var(--line); }
+.card-sub .sub-link { color: var(--accent); font-weight: 600; text-decoration: none; }
+.card-sub .sub-link:hover span { text-decoration: underline; text-underline-offset: 3px; }
+.card-sub .sub-link svg.ext { width: 12px; height: 12px; margin-left: -2px; }
 .article-sub { margin: -8px 0 20px; font-size: 15px; }
 .article-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 0 0 28px; }
 .prose + .article-actions, .speakers + .article-actions { margin: 28px 0 0; }
