@@ -1,0 +1,26 @@
+# Local WordPress with the theme mounted: docker compose up -d, then http://localhost:8091
+services:
+  db:
+    image: mariadb:11
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: wp
+      MARIADB_USER: wp
+      MARIADB_PASSWORD: wp
+    volumes:
+      - db:/var/lib/mysql
+  wordpress:
+    image: wordpress:php8.2-apache
+    depends_on: [db]
+    ports:
+      - "8091:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wp
+      WORDPRESS_DB_PASSWORD: wp
+      WORDPRESS_DB_NAME: wp
+    volumes:
+      - ./clear-eo:/var/www/html/wp-content/themes/clear-eo
+      - ./uploads:/var/www/html/wp-content/uploads   # media library, not in git
+volumes:
+  db:

@@ -1,0 +1,13 @@
+/* CLEAR-EO fields under the editor (inc/meta-boxes.php) */
+.ce-box { display: grid; gap: 16px; }
+.ce-intro { margin: 4px 0 0; padding: 10px 12px; background: #f0f6fa; border-left: 3px solid #205076; }
+.ce-label, .ce-sub label { display: block; font-weight: 600; margin-bottom: 4px; }
+.ce-field .description { margin-top: 4px; }
+.ce-media img { display: block; max-width: 320px; max-height: 120px; object-fit: cover; margin-bottom: 8px; border-radius: 4px; }
+.ce-media [hidden] { display: none; }
+.ce-rows { display: grid; gap: 12px; margin-bottom: 10px; }
+.ce-row { position: relative; display: grid; gap: 10px; padding: 12px 14px; border: 1px solid #dcdcde; border-radius: 6px; background: #fbfbfc; }
+.ce-row-tools { position: absolute; top: 8px; right: 12px; display: flex; gap: 10px; }
+.ce-row-tools .button-link { text-decoration: none; }
+.ce-sub input[type="text"], .ce-sub textarea { width: 100%; }
+.ce-sub:first-of-type { padding-right: 140px; }

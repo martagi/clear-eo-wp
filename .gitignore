@@ -1,0 +1,11 @@
+# WordPress media library (uploads from the local Docker site)
+uploads/
+wp-content/uploads/
+
+# Pictures the importer adds to the media library (copy them from the static site's _assets/, see README)
+clear-eo/import/_assets/
+
+# Build output and OS files
+*.zip
+.DS_Store
+__MACOSX/

@@ -1,0 +1,166 @@
+{
+  "kicker": "Applications",
+  "title": "On‑demand workflows for floods, agricultural adaptation, and air quality forecasting.",
+  "items": [
+    {
+      "theme": "flood",
+      "tab": "Floods",
+      "location": "Larger Copenhagen, Denmark · Italy",
+      "title": "Flooding in urban areas",
+      "summary": "The Flooding in urban areas application is an on-demand urban flooding alert workflow using combined information from global and regional weather forecasts and near real time observations including satellites through detection and triggering. Using a urban drainage aware precipitation forecasts and a high-resolution 3D Digital Elevation Model tailored to flood risk, a probability based flood warning can be issued.",
+      "sections": [
+        {
+          "heading": "Objectives",
+          "style": "list",
+          "items": [
+            "Develop a real-time urban flash flood warning system using EO and weather forecast data",
+            "Integrate lightning and convective event detection to trigger flood alerts",
+            "Generate probabilistic, drainage-aware flood impact scenarios",
+            "Support urban resilience planning with high-resolution terrain modeling",
+            "Demonstrate the system in diverse European urban environments"
+          ]
+        },
+        {
+          "heading": "Data sets",
+          "style": "list",
+          "items": [
+            "**Meteosat Third Generation lightning and water vapor data** – real-time convective event tracking for cloud and atmosphere monitoring",
+            "**ECMWF operational ensemble (IFSENS) and DMI operational ensemble (DINI) forecasts** – tailored for heavy rainfall probabilities and alert level in urban areas",
+            "**LiDAR point cloud data** – 3D terrain models for mapping of flood extent and depth",
+            "**Sewer system data** – Danish planning authority dataset for drainage aware flooding warnings"
+          ]
+        },
+        {
+          "heading": "CLEAR-EO partners involved",
+          "style": "partners",
+          "items": [
+            "Danish Meteorological Institute (DMI)",
+            "Ithaca S.r.l.",
+            "Politecnico di Torino"
+          ]
+        },
+        {
+          "heading": "Stakeholders",
+          "style": "chips",
+          "items": [
+            "Local authorities and municipalities",
+            "Urban infrastructure planners and managers",
+            "Meteorological services",
+            "Citizens and communities",
+            "European research and innovation bodies"
+          ]
+        }
+      ],
+      "image": "_assets/applications/flood-danube.jpg",
+      "page": "## Extreme weather in urban environment\n\nThis application develops an innovative, on-demand urban flash flood warning system that combines Earth Observation data from novel satellites on clouds information with high-resolution ensemble weather forecasts. By detecting lightning and convective events in real time, the system triggers a tailored post-processing workflow to generate probabilistic, drainage-aware flood warnings and impact scenarios. High-resolution 3D terrain models derived from LiDAR data support the accurate mapping of flood extent and depth.\n\nDemonstrated in Denmark (see map of larger Copenhagen, Denmark below) and Italy, it supports timely, location-specific decision-making to better protect cities from extreme rainfall events.\n\n![Map of the larger Copenhagen area, Denmark, with the pilot area outlined](_assets/applications/flood-copenhagen-map.jpg)\n\n## Objectives\n\n- Develop a real-time urban flash flood warning system using EO and weather forecast data\n- Integrate lightning and convective event detection to trigger flood alerts\n- Generate probabilistic, drainage-aware flood impact scenarios\n- Support urban resilience planning with high-resolution terrain modeling\n- Demonstrate the system in diverse European urban environments\n\n## CLEAR-EO partners involved\n\n- **Danish Meteorological Institute (DMI)** – contributes expertise in weather forecasting, postprocessing, and hydrological modeling to support real-time flood alert generation\n- **Ithaca S.r.l.** – provides advanced capabilities in satellite data processing, 3D modeling, and experience with Copernicus Emergency Mapping Services flood products\n- **Politecnico di Torino** – specializes in high-resolution 3D LiDAR data processing, particularly in complex urban environments, enabling accurate flood impact simulations\n\n## Stakeholders\n\n- Local authorities and municipalities, as well as urban infrastructure planners and managers, interested in flood risk management and preparedness tools\n- Meteorological services for forecast provision and alert dissemination\n- Citizens and communities, as end-users of flood alerts and emergency response\n- European research and innovation bodies, institutions and initiatives focused on climate resilience and EO applications that are interested in evaluating and potentially incorporating CLEAR-EO results into their tools, platforms, or downstream services\n\n## Data sets\n\n- **Meteosat Third Generation lightning and water vapor data** – real-time convective event tracking for cloud and atmosphere monitoring;\n- **ECMWF operational ensemble (IFSENS) and DMI operational ensemble (DINI) forecasts** – tailored for heavy rainfall probabilities and alert level in urban areas;\n- **LiDAR point cloud data** – 3D terrain models for mapping of flood extent and depth;\n- **Sewer system data** – Danish planning authority dataset for drainage aware flooding warnings."
+    },
+    {
+      "theme": "agri",
+      "tab": "Agriculture",
+      "location": "Thessaly, central Greece",
+      "title": "Climate adaptation in agriculture",
+      "summary": "The Climate adaptation in agriculture application fuses downscaled forecasts with satellite-derived soil and crop indicators to trigger precise, field-level warnings on agricultural drought, precipitation, and soil stress, so that agricultural decisions can be made earlier, with greater confidence. The pilot is conducted in Thessaly (central Greece), leveraging ~45 in-field stations operated by Neuropublic, across tomato and cotton fields.",
+      "sections": [
+        {
+          "heading": "How it works",
+          "style": "list",
+          "items": [
+            "**Geofenced triggering & smart downscaling**: the application activates only when a regional, coarse-scale trigger flags elevated risk within the Area of Interest.",
+            "**Co-defined trigger logic**: agronomists help define what constitutes a “bad scenario” for each crop and growth stage.",
+            "**User-interpreted alerts**: the application provides timely detection and forecasting signals that inform decisions, while farmers and advisors interpret the alerts within their local practices and constraints."
+          ]
+        },
+        {
+          "heading": "Alert strands",
+          "style": "chips",
+          "items": [
+            "Extreme precipitation signals",
+            "Drought-related signals",
+            "Soil-moisture anomalies"
+          ]
+        },
+        {
+          "heading": "Data sources",
+          "style": "chips",
+          "items": [
+            "Copernicus Sentinel-2 (optical)",
+            "Sentinel-1 (radar)",
+            "MSG/MTG",
+            "Weather and climate information",
+            "In-situ sensor data",
+            "Field boundaries and phenology calendars"
+          ]
+        },
+        {
+          "heading": "Partners & roles",
+          "style": "partners",
+          "items": [
+            "NEUROPUBLIC",
+            "LINKS",
+            "DMI",
+            "ECMWF",
+            "SISTEMA"
+          ]
+        },
+        {
+          "heading": "Stakeholders",
+          "style": "chips",
+          "items": [
+            "Farmers, agronomists, farm-advisory services",
+            "Agricultural cooperatives, suppliers",
+            "Civil protection, environmental agencies",
+            "Research and innovation networks"
+          ]
+        }
+      ],
+      "image": "_assets/applications/agri-tarim-basin.jpg",
+      "page": "## Climate and In-situ Data in Agriculture: Earth Observation Services for Resilient Farming\n\nAdaptation of agricultural activity to both short- and long-term climate change effects is a great challenge.\n\n![Map of the pilot area in Thessaly, central Greece, with the pilot stations installed in tomato and cotton fields](_assets/applications/agri-pilot-area-thessaly.jpg)\n\n## Pilot area\n\nThe pilot is conducted in Thessaly (central Greece), leveraging ~45 in-field stations operated by Neuropublic, across tomato and cotton fields. This network underpins calibration, validation, and the co-definition of alert thresholds and specifications with local agronomists and farmers.\n\nThis application turns Earth Observation, weather/climate information, and in-field sensor data into field-level alerts for soil-moisture anomalies and crop stress. It focuses on early detection and short-term forecasting, so users can recognise emerging risks (such as drought stress or excess rainfall) before they escalate. Designed with farmers and agronomists, the service refines alert content and visualization through a farmer questionnaire to ensure the format, timing, and delivery channels fit day-to-day needs.\n\n### Geofenced triggering & smart downscaling\n\nThe application activates only when a regional, coarse-scale trigger (e.g., from high-frequency satellite or forecast data) flags elevated risk within the Area of Interest. When that happens, it downscales the information and runs the localized workflows to produce field-level alerts, optimizing both timeliness and efficiency. The localized workflows distinguish among three complementary alert strands: (1a) Extreme precipitation signals, (1b) Drought-related signals, and (2) Soil-moisture anomalies. Together they provide a coherent picture of water-related stress and its short-term evolution at the field scale.\n\n### Co-defined trigger logic\n\nAgronomists help define what constitutes a “bad scenario” for each crop and growth stage, i.e. the threshold combinations (e.g. precipitation intensity/duration + crop + phenological stage, or persistent dryness + temperature), that determine when regional triggers should activate the localized workflows.\n\n### User-interpreted alerts\n\nThe application provides timely detection and forecasting signals that inform decisions, while farmers and advisors interpret the alerts within their local practices and constraints. The final delivery and visualization choices (dashboards, push notifications, summaries) are being validated through farmers’ involvement.\n\n## Objectives\n\nThe application aims to:\n\n- detect and forecast soil-moisture anomalies and crop-stress signals at field scale,\n- fuse satellite, weather/climate and in-situ observations into robust indicators.\n- deliver clear alerts through the CLEAR-EO platform\n- ensure interoperability with European programmes and data spaces\n\n## Partners & roles\n\n- **NEUROPUBLIC (NP):** Leads APP2 development, coordinates co-design with farmers, and utilizes its extensive in-field sensor network.\n- **LINKS:** Advances the use of MSG/MTG-derived vegetation information to assess effectiveness and supports integration of the application workflows within the shared platform.\n- **DMI:** Brings severe-weather expertise and supports geospatial alerting for extreme-rainfall and drought-related signals.\n- **ECMWF:** Contributes forecast and notification capabilities that underpin reliable, geofenced triggering and alert delivery.\n- **SISTEMA:** Enables deployment and integration of APP2 components within the common data space and supports validation of triggering factors and outcomes.\n\n## Stakeholders\n\n- Farmers, agronomists, farm-advisory services\n- Agricultural cooperatives, suppliers\n- Civil protection, environmental agencies\n- Research and innovation networks\n\n## Data sources\n\nThe application combines a variety of EO and other data: Copernicus Sentinel-2 (optical) and, where useful, Sentinel-1 (radar), European meteorological satellite products (e.g. MSG/MTG) for high-frequency context, weather and climate information from recognised providers, in-situ sensor data from NP’s network for calibration/validation, and ancillary farm data such as field boundaries and phenology calendars."
+    },
+    {
+      "theme": "air",
+      "tab": "Air quality",
+      "location": "Marseille · Europe",
+      "title": "Air quality in urban areas",
+      "summary": "The Air quality in urban areas application enhances air quality forecasts by integrating satellite observations with advanced models like CHIMERE and machine learning to provide more accurate and detailed predictions of aerosol pollution.",
+      "sections": [
+        {
+          "heading": "Air quality forecast",
+          "style": "list",
+          "items": [
+            "The system combines the **WRF meteorological model** and the **CHIMERE chemistry-transport model** to analyse and forecast air pollution across Europe and in high detail over Marseille.",
+            "**A European scale (10–30 km)** providing large-scale transport and boundary conditions.",
+            "**A high-resolution domain over Marseille (1–3 km)** capturing local emission dynamics from traffic, industry, maritime activities, and dust events."
+          ]
+        },
+        {
+          "heading": "Dataset",
+          "style": "chips",
+          "items": [
+            "EDGAR emissions",
+            "AtmoSud inventories",
+            "CAMS global forecasts",
+            "Sentinel-5 precursor · Sentinel-5 · Sentinel-4"
+          ]
+        },
+        {
+          "heading": "CLEAR-EO partners involved",
+          "style": "partners",
+          "items": [
+            "SUEZ ARIA",
+            "UPEC",
+            "SISTEMA"
+          ]
+        },
+        {
+          "heading": "Stakeholders",
+          "style": "chips",
+          "items": [
+            "AtmoSud (Air Quality network for the South East region of France)"
+          ]
+        }
+      ],
+      "image": "_assets/applications/air-southern-europe.jpg",
+      "page": "![Map of the two modelling domains: (1) Europe and (2) Marseille](_assets/applications/air-quality-map-marseille.jpg)\n\n## Air quality forecast\n\nAir quality monitoring and modelling application integrates Earth observation data with advanced simulation tools. The system combines the [WRF meteorological model](https://en.wikipedia.org/wiki/Weather_Research_and_Forecasting_Model) and the [CHIMERE chemistry-transport model](https://gmd.copernicus.org/articles/17/5431/2024/) to analyse and forecast air pollution across **Europe** and in high detail over **Marseille**. (see map above)\n\nThe modelling chain operates on two domains: a European scale (10–30 km) providing large-scale transport and boundary conditions, and a high-resolution domain over Marseille (1–3 km) capturing local emission dynamics from traffic, industry, maritime activities, and dust events.\n\nUsing [EDGAR emissions](https://edgar.jrc.ec.europa.eu/) for the European domain and [AtmoSud](https://www.atmosud.org/) inventories for Marseille, and driven by [CAMS global forecasts](https://atmosphere.copernicus.eu/global-forecast-plots), the application will deliver high-quality data and insights on air pollutant behaviour.\n\nThis pilot application showcases how CLEAR-EO supports urban air quality management and evidence-based environmental policies through the integration of Earth observation, modelling, and data services.\n\n## CLEAR-EO partners involved\n\nSUEZ ARIA, UPEC, and SISTEMA\n\n## Stakeholders\n\nBy actively participating in the dissemination of results to end users, AtmoSud (Air Quality network for the South East region of France) contributes to the broader accessibility and applicability of the forecasting system, extending its impact beyond the consortium to a diverse range of stakeholders, scientific communities, and potential beneficiaries.\n\n## Dataset\n\nDatasets coming from different sources will be processed and optimised for Machine learning applications. The combination of Sentinel-5 precursor, Sentinel-5 and Sentinel-4 (respectively S5P, S5 and S4) will provide more data about the chemical species and aerosols and their vertical distribution with an unprecedented temporal resolution."
+    }
+  ]
+}

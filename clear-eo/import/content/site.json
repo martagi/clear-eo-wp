@@ -1,0 +1,135 @@
+{
+  "hero": {
+    "background": "_assets/hero.jpg",
+    "eyebrow": "CLEAR-EO Project",
+    "title": "From space to",
+    "title_highlight": "actionable insight",
+    "acronym": "**CL**imate change, **E**xtreme weather and **A**ir quality anomalies **R**esilience through novel **E**arth **O**bservation advanced data analytics",
+    "lede": "By integrating new data from Meteosat Third Generation and the EUMETSAT Polar System Second Generation, CLEAR-EO strengthens Destination Earth’s ability to deliver faster high-resolution environmental intelligence for climate adaptation in agriculture, air quality forecasting, and urban flood management.",
+    "primary_button": {
+      "label": "Explore the applications",
+      "link": "#applications"
+    },
+    "secondary_button": {
+      "label": "LinkedIn",
+      "link": "https://www.linkedin.com/company/clear-eo"
+    },
+    "tags": [
+      "Meteosat Third Generation",
+      "EUMETSAT Polar System Second Generation",
+      "European Weather Cloud",
+      "Destination Earth"
+    ]
+  },
+  "facts": [
+    {
+      "value": "3",
+      "label": "Applications"
+    },
+    {
+      "value": "9 + 2",
+      "label": "Partners & Affiliated Entities"
+    },
+    {
+      "value": "~50%",
+      "label": "of the consortium’s experts are women"
+    },
+    {
+      "value": "Oct 2025",
+      "label": "Project kick-off"
+    },
+    {
+      "value": "101182722",
+      "label": "Horizon Europe grant agreement no."
+    }
+  ],
+  "about": {
+    "kicker": "About",
+    "title": "Advancing Destination Earth with Next-Generation Satellite Intelligence",
+    "text": "The European Union has launched CLEAR-EO, an ambitious research and innovation project that will leverage newly available satellite missions – including Meteosat Third Generation and the EUMETSAT Polar System Second Generation – alongside European cloud infrastructures such as the European Weather Cloud, to provide new critical services to communities around Europe.",
+    "quote": "“CLEAR-EO is about turning space data into concrete solutions for society,” says Paolo Viviani.",
+    "pillars": [
+      {
+        "icon": "lab",
+        "title": "How we deliver",
+        "text": "CLEAR‑EO teams up a multidisciplinary partnership — from research organizations, weather forecasting centres, EO data specialists and cloud platform experts to GEO and DestinE contributors — to develop, demonstrate, and promote new applications and the early exploitation of new weather satellite data. Our work supports the SDGs and the European Green Deal."
+      },
+      {
+        "icon": "satellite",
+        "title": "Next-gen satellites",
+        "text": "CLEAR‑EO leverages newly available satellite data like Meteosat Third Generation and EUMETSAT Polar System Second Generation, along with European cloud infrastructures such as the European Weather Cloud."
+      },
+      {
+        "icon": "server",
+        "title": "Virtual Observatory",
+        "text": "The Virtual Observatory is a digital platform being developed to connect diverse environmental data with real-world applications through smart geospatial alerts that will support faster response to extreme events."
+      },
+      {
+        "icon": "cloud",
+        "title": "Decision‑ready outputs",
+        "text": "On‑demand workflows for floods, agricultural adaptation, and air quality forecasting."
+      }
+    ]
+  },
+  "observatory": {
+    "kicker": "Virtual Observatory",
+    "title": "A digital platform for application triggering and orchestration, bridging diverse data sources with real-world applications.",
+    "text": "It runs innovative processing chains — covering phenomena such as rainfall and drought — brokers geo-fenced notifications of relevant events, and triggers downstream applications on demand. The goal is to deliver timely, actionable alerts to both developers and end users, ultimately supporting faster and better-informed decision-making.",
+    "steps": [
+      {
+        "title": "Federated data space",
+        "text": "CLEAR-EO builds a federated data space that provides scalable data governance component for the project to be fully integrated with the internal and external resources in terms of data, applications, computational resources and European data ecosystems."
+      },
+      {
+        "title": "Computational resources",
+        "text": "The CLEAR-EO infrastructure is distributed and heterogeneous, combining cloud, HPC, and on-premise/private facilities, while remaining sovereign by relying exclusively on EU cloud providers."
+      },
+      {
+        "title": "Geo-spatial notification system",
+        "text": "AVISO notifies users when relevant events occur, orchestrates downstream modelling, and will be extended to support geo-localized event alerts.",
+        "pulse": true
+      },
+      {
+        "title": "Applications",
+        "text": "",
+        "chips": [
+          "Flooding in urban areas",
+          "Climate adaptation in agriculture",
+          "Air quality in urban areas"
+        ]
+      }
+    ],
+    "note_title": "AVISO",
+    "note_text": "AVISO is the geo-spatial notification system at the heart of the CLEAR-EO Virtual Observatory. The system follows a producer–consumer model: producers post notifications specifying the event type and the affected geographic area, while consumers subscribe to event categories within regions of interest and can integrate the client either as a library or a standalone process capable of scheduling further workflows."
+  },
+  "whatsnew": {
+    "kicker": "CLEAR-EO",
+    "title": "What’s new",
+    "default_link": "https://clear-eo.eu/?page_id=77"
+  },
+  "footer": {
+    "title": "From space to actionable insight",
+    "button": {
+      "label": "LinkedIn",
+      "link": "https://www.linkedin.com/company/clear-eo"
+    },
+    "funding": "CLEAR‑EO has received funding from the European Union’s Horizon Europe Research and Innovation programme under grant agreement no. 101182722 and support in terms of computational resources from the EOSC EU Node and CINECA IscraC allocations.",
+    "support": "",
+    "project_links": [
+      {
+        "label": "LinkedIn",
+        "link": "https://www.linkedin.com/company/clear-eo"
+      },
+      {
+        "label": "Privacy Policy",
+        "link": "https://clear-eo.eu/?page_id=3"
+      },
+      {
+        "label": "Current website",
+        "link": "https://clear-eo.eu"
+      }
+    ],
+    "copyright": "© CLEAR-EO consortium",
+    "note": "Draft redesign · content from clear-eo.eu"
+  }
+}

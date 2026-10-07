@@ -1,0 +1,125 @@
+{
+ "kicker": "Consortium",
+ "title": "Partners",
+ "text": "From research organizations, weather forecasting centres, EO data specialists and cloud platform experts to GEO and DestinE contributors.",
+ "map": "_assets/partners-map.png",
+ "map_alt": "Map of Europe highlighting the partner countries: Norway, Denmark, the United Kingdom, France, Italy, Austria and Greece.",
+ "partners": [
+  {
+   "name": "LINKS Foundation",
+   "logo": "_assets/partners/links.png",
+   "logo_alt": "LINKS Foundation logo",
+   "country": "Italy",
+   "link": "https://linksfoundation.com/en/",
+   "role": "Project Co-coordinator",
+   "description": "Advances the use of MSG/MTG-derived vegetation information to assess effectiveness and supports integration of the application workflows within the shared platform."
+  },
+  {
+   "name": "Ithaca S.r.l.",
+   "logo": "_assets/partners/ithaca.png",
+   "logo_alt": "Ithaca logo",
+   "country": "Italy",
+   "link": "https://ithaca.earth",
+   "role": "Partner",
+   "description": "Provides advanced capabilities in satellite data processing, 3D modeling, and experience with Copernicus Emergency Mapping Services flood products."
+  },
+  {
+   "name": "Neuropublic",
+   "logo": "_assets/partners/neuropublic.png",
+   "logo_alt": "Neuropublic logo",
+   "country": "Greece",
+   "link": "https://www.neuropublic.gr/en/",
+   "role": "Partner",
+   "description": "Leads APP2 development, coordinates co-design with farmers, and utilizes its extensive in-field sensor network."
+  },
+  {
+   "name": "European Centre for Medium-Range Weather Forecasts",
+   "logo": "_assets/partners/ecmwf.png",
+   "logo_alt": "ECMWF logo",
+   "country": "Intergovernmental",
+   "link": "https://www.ecmwf.int",
+   "role": "Partner",
+   "description": "Contributes forecast and notification capabilities that underpin reliable, geofenced triggering and alert delivery."
+  },
+  {
+   "name": "SISTEMA",
+   "logo": "_assets/partners/sistema.png",
+   "logo_alt": "SISTEMA logo",
+   "country": "Austria",
+   "link": "https://www.sistema.at",
+   "role": "Partner",
+   "description": "Enables deployment and integration of APP2 components within the common data space and supports validation of triggering factors and outcomes."
+  },
+  {
+   "name": "Danish Meteorological Institute",
+   "logo": "_assets/partners/dmi.png",
+   "logo_alt": "DMI logo",
+   "country": "Denmark",
+   "link": "https://www.dmi.dk",
+   "role": "Partner",
+   "description": "Contributes expertise in weather forecasting, postprocessing, and hydrological modeling to support real-time flood alert generation."
+  },
+  {
+   "name": "SUEZ Group",
+   "logo": "_assets/partners/aria.png",
+   "logo_alt": "ARIA Technologies, a SUEZ company, logo",
+   "country": "France",
+   "link": "https://www.suez.com/en/group/about-us/air-climate",
+   "role": "Partner",
+   "description": "CLEAR-EO partner involved in the Air quality in urban areas application."
+  },
+  {
+   "name": "Université Paris-Est Créteil",
+   "logo": "_assets/partners/upec.png",
+   "logo_alt": "UPEC logo",
+   "country": "France",
+   "link": "https://www.u-pec.fr",
+   "role": "Partner",
+   "description": "CLEAR-EO partner involved in the Air quality in urban areas application."
+  },
+  {
+   "name": "BLB",
+   "logo": "_assets/partners/blb.png",
+   "logo_alt": "BLB logo",
+   "country": "Norway",
+   "link": "https://blb.as",
+   "role": "Partner",
+   "description": "Leads dissemination and engagement activities, helping connect Earth observation data, scientific innovation, and user communities to support the development of actionable Earth intelligence."
+  }
+ ],
+ "affiliated_title": "Affiliated Entities",
+ "affiliated": [
+  {
+   "name": "Politecnico di Torino",
+   "logo": "_assets/partners/polito.png",
+   "logo_alt": "Politecnico di Torino logo",
+   "country": "Italy",
+   "link": "https://www.polito.it",
+   "role": "Affiliated entity",
+   "description": "Specializes in high-resolution 3D LiDAR data processing, particularly in complex urban environments, enabling accurate flood impact simulations."
+  },
+  {
+   "name": "MEEO",
+   "logo": "_assets/partners/meeo.png",
+   "logo_alt": "MEEO logo",
+   "country": "Italy",
+   "link": "https://www.meeo.it",
+   "role": "Affiliated entity"
+  }
+ ],
+ "women": {
+  "percent": 50,
+  "label": "~50%",
+  "text": "On International Women’s Day, CLEAR-EO celebrates the many women contributing their expertise to the project. Around 50% of the consortium’s experts are women, working across Earth observation, data science, climate services, and environmental intelligence.",
+  "link_label": "International Women’s Day: Highlighting the Women of CLEAR-EO",
+  "link": "https://clear-eo.eu/?page_id=77"
+ },
+ "collaborations": [
+  {
+   "name": "Farmtopia",
+   "text": "Farmtopia collaborates with CLEAR-EO on agricultural applications, connecting Earth observation data with real-world farming needs.",
+   "link_label": "farmtopia.eu",
+   "link": "https://farmtopia.eu"
+  }
+ ]
+}
