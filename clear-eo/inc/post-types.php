@@ -18,7 +18,7 @@ add_action(
 		$common = array(
 			'public'       => true,
 			'show_in_rest' => true,
-			'supports'     => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions' ),
+			'supports'     => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'custom-fields' ),
 		);
 
 		register_post_type(
@@ -52,7 +52,7 @@ add_action(
 				'has_archive'   => false,
 				'hierarchical'  => false,
 				'rewrite'       => array( 'slug' => 'applications', 'with_front' => false ),
-				'supports'      => array( 'title', 'editor', 'excerpt', 'thumbnail', 'page-attributes', 'revisions' ),
+				'supports'      => array( 'title', 'editor', 'excerpt', 'thumbnail', 'page-attributes', 'revisions', 'custom-fields' ),
 			)
 		);
 		register_post_type(
@@ -65,7 +65,7 @@ add_action(
 				'exclude_from_search' => true,
 				'menu_icon'           => 'dashicons-groups',
 				'menu_position'       => 22,
-				'supports'            => array( 'title', 'thumbnail', 'page-attributes' ),
+				'supports'            => array( 'title', 'thumbnail', 'page-attributes', 'custom-fields' ),
 			)
 		);
 	}

@@ -19,6 +19,10 @@ services:
       WORDPRESS_DB_USER: wp
       WORDPRESS_DB_PASSWORD: wp
       WORDPRESS_DB_NAME: wp
+      # Use the address the site is opened with (localhost, the server's IP or name), so it works from other machines
+      WORDPRESS_CONFIG_EXTRA: |
+        define( 'WP_HOME', 'http://' . $$_SERVER['HTTP_HOST'] );
+        define( 'WP_SITEURL', 'http://' . $$_SERVER['HTTP_HOST'] );
     volumes:
       - ./clear-eo:/var/www/html/wp-content/themes/clear-eo
       - ./uploads:/var/www/html/wp-content/uploads   # media library, not in git

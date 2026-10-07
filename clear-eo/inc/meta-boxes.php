@@ -118,7 +118,9 @@ add_action(
 		if ( ! isset( $boxes[ $post_type ] ) ) {
 			return;
 		}
-		add_meta_box( 'clear_eo_fields', $boxes[ $post_type ]['title'], 'clear_eo_render_box', $post_type, 'normal', 'high' );
+		// Classic editor only: the block editor shows the same fields in its sidebar (assets/js/editor-fields.js),
+		// which saves them together with the post instead of in a second request
+		add_meta_box( 'clear_eo_fields', $boxes[ $post_type ]['title'], 'clear_eo_render_box', $post_type, 'normal', 'high', array( '__back_compat_meta_box' => true ) );
 	}
 );
 
@@ -208,6 +210,7 @@ function clear_eo_render_repeater( $key, array $rows, array $spec ) {
 	echo '<button type="button" class="button" data-add>' . esc_html( $spec['add'] ) . '</button></div>';
 }
 
+// Classic editor: the fields arrive with the form
 add_action(
 	'save_post',
 	function ( $post_id, $post ) {
@@ -222,34 +225,110 @@ add_action(
 			return;
 		}
 		foreach ( $boxes[ $post->post_type ]['fields'] as $f ) {
-			list( $key, , $type ) = $f;
-			$raw                  = isset( $_POST[ $key ] ) ? wp_unslash( $_POST[ $key ] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput -- sanitized below
-			if ( 'repeater' === $type ) {
-				$rows = array();
-				foreach ( is_array( $raw ) ? $raw : array() as $r ) {
-					$clean  = array();
-					$filled = false;
-					foreach ( $f[4]['fields'] as $sub => $sf ) {
-						$clean[ $sub ] = clear_eo_clean( isset( $r[ $sub ] ) ? $r[ $sub ] : '', $sf[1], isset( $sf[2] ) ? $sf[2] : array() );
-						// A drop-down always has a value, so only typed-in fields make a row worth keeping
-						$filled = $filled || ( 'select' !== $sf[1] && $clean[ $sub ] );
-					}
-					if ( $filled ) {
-						$rows[] = $clean;
-					}
-				}
-				$value = $rows;
-			} else {
-				$value = clear_eo_clean( $raw, $type, isset( $f[4] ) ? $f[4] : array() );
-			}
+			$value = clear_eo_clean_field( isset( $_POST[ $f[0] ] ) ? wp_unslash( $_POST[ $f[0] ] ) : '', $f ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput -- sanitized there
 			if ( '' === $value || array() === $value || false === $value ) {
-				delete_post_meta( $post_id, $key );
+				delete_post_meta( $post_id, $f[0] );
 			} else {
-				update_post_meta( $post_id, $key, wp_slash( $value ) );
+				update_post_meta( $post_id, $f[0], wp_slash( $value ) );
 			}
 		}
-		// Events and webinars are dated by their start date; one without a date is today's
-		if ( in_array( $post->post_type, array( 'clear_event', 'clear_webinar' ), true ) && ! get_post_meta( $post_id, '_ce_date', true ) ) {
+	},
+	10,
+	2
+);
+
+// Block editor: the fields are saved through the REST API with the post, so register them there
+add_action(
+	'init',
+	function () {
+		foreach ( clear_eo_meta_boxes() as $post_type => $box ) {
+			foreach ( $box['fields'] as $f ) {
+				register_post_meta(
+					$post_type,
+					$f[0],
+					array(
+						'single'            => true,
+						'type'              => clear_eo_rest_type( $f[2] ),
+						'default'           => clear_eo_rest_default( $f[2] ),
+						'show_in_rest'      => array( 'schema' => clear_eo_rest_schema( $f ) ),
+						'sanitize_callback' => function ( $v ) use ( $f ) {
+							return clear_eo_clean_field( $v, $f );
+						},
+						'auth_callback'     => function ( $allowed, $key, $post_id ) {
+							return current_user_can( 'edit_post', $post_id );
+						},
+					)
+				);
+			}
+		}
+	}
+);
+
+function clear_eo_rest_type( $type ) {
+	$t = array(
+		'repeater' => 'array',
+		'lines'    => 'array',
+		'media'    => 'integer',
+		'checkbox' => 'boolean',
+	);
+	return isset( $t[ $type ] ) ? $t[ $type ] : 'string';
+}
+
+function clear_eo_rest_default( $type ) {
+	$d = array(
+		'array'   => array(),
+		'integer' => 0,
+		'boolean' => false,
+	);
+	$t = clear_eo_rest_type( $type );
+	return isset( $d[ $t ] ) ? $d[ $t ] : '';
+}
+
+function clear_eo_rest_schema( $f ) {
+	$schema = array( 'type' => clear_eo_rest_type( $f[2] ) );
+	if ( 'lines' === $f[2] ) {
+		$schema['items'] = array( 'type' => 'string' );
+	}
+	if ( 'repeater' === $f[2] ) {
+		$props = array();
+		foreach ( $f[4]['fields'] as $sub => $sf ) {
+			$props[ $sub ] = 'lines' === $sf[1] ? array( 'type' => 'array', 'items' => array( 'type' => 'string' ) ) : array( 'type' => 'string' );
+		}
+		$schema['items'] = array(
+			'type'       => 'object',
+			'properties' => $props,
+		);
+	}
+	return $schema;
+}
+
+/** A field's value, cleaned. Repeaters drop the rows nothing was typed in. */
+function clear_eo_clean_field( $raw, $f ) {
+	if ( 'repeater' !== $f[2] ) {
+		return clear_eo_clean( $raw, $f[2], isset( $f[4] ) ? $f[4] : array() );
+	}
+	$rows = array();
+	foreach ( is_array( $raw ) ? $raw : array() as $r ) {
+		$clean  = array();
+		$filled = false;
+		foreach ( $f[4]['fields'] as $sub => $sf ) {
+			$clean[ $sub ] = clear_eo_clean( is_array( $r ) && isset( $r[ $sub ] ) ? $r[ $sub ] : '', $sf[1], isset( $sf[2] ) ? $sf[2] : array() );
+			// A drop-down always has a value, so only typed-in fields make a row worth keeping
+			$filled = $filled || ( 'select' !== $sf[1] && $clean[ $sub ] );
+		}
+		if ( $filled ) {
+			$rows[] = $clean;
+		}
+	}
+	return $rows;
+}
+
+// Events and webinars are dated by their start date; one saved without a date gets today's.
+// wp_after_insert_post runs after the fields are saved, whichever editor saved them.
+add_action(
+	'wp_after_insert_post',
+	function ( $post_id, $post ) {
+		if ( in_array( $post->post_type, array( 'clear_event', 'clear_webinar' ), true ) && 'auto-draft' !== $post->post_status && ! get_post_meta( $post_id, '_ce_date', true ) ) {
 			update_post_meta( $post_id, '_ce_date', wp_date( 'Y-m-d' ) );
 		}
 	},
@@ -258,6 +337,12 @@ add_action(
 );
 
 function clear_eo_clean( $v, $type, $choices = array() ) {
+	if ( 'lines' === $type && is_array( $v ) ) {
+		$v = implode( "\n", array_filter( $v, 'is_scalar' ) );
+	}
+	if ( 'checkbox' === $type ) {
+		return (bool) $v && 'false' !== $v;
+	}
 	if ( is_array( $v ) ) {
 		return '';
 	}
@@ -267,9 +352,7 @@ function clear_eo_clean( $v, $type, $choices = array() ) {
 		case 'date':
 			return preg_match( '/^\d{4}-\d{2}-\d{2}$/', $v ) ? $v : '';
 		case 'media':
-			return absint( $v ) ? absint( $v ) : '';
-		case 'checkbox':
-			return $v ? 1 : '';
+			return absint( $v );
 		case 'select':
 			return array_key_exists( $v, $choices ) ? $v : '';
 		case 'lines':
@@ -291,5 +374,63 @@ add_action(
 		$ver = wp_get_theme()->get( 'Version' );
 		wp_enqueue_style( 'clear-eo-admin', get_theme_file_uri( 'assets/css/admin.css' ), array(), $ver );
 		wp_enqueue_script( 'clear-eo-admin', get_theme_file_uri( 'assets/js/admin.js' ), array(), $ver, true );
+	}
+);
+
+// Block editor: the fields as a panel in the sidebar's post settings
+add_action(
+	'enqueue_block_editor_assets',
+	function () {
+		$type  = get_post_type();
+		$boxes = clear_eo_meta_boxes();
+		if ( ! $type || ! isset( $boxes[ $type ] ) ) {
+			return;
+		}
+		$fields = array();
+		foreach ( $boxes[ $type ]['fields'] as $f ) {
+			$field = array(
+				'key'   => $f[0],
+				'label' => $f[1],
+				'type'  => $f[2],
+				'help'  => isset( $f[3] ) ? $f[3] : '',
+			);
+			if ( 'select' === $f[2] ) {
+				$field['choices'] = $f[4];
+			}
+			if ( 'repeater' === $f[2] ) {
+				$field['add'] = $f[4]['add'];
+				$field['sub'] = array();
+				foreach ( $f[4]['fields'] as $sub => $sf ) {
+					$field['sub'][] = array(
+						'key'     => $sub,
+						'label'   => $sf[0],
+						'type'    => $sf[1],
+						'choices' => isset( $sf[2] ) ? $sf[2] : null,
+					);
+				}
+			}
+			$fields[] = $field;
+		}
+		$ver = wp_get_theme()->get( 'Version' );
+		wp_enqueue_style( 'clear-eo-admin', get_theme_file_uri( 'assets/css/admin.css' ), array(), $ver );
+		wp_enqueue_script( 'clear-eo-editor-fields', get_theme_file_uri( 'assets/js/editor-fields.js' ), array( 'wp-plugins', 'wp-editor', 'wp-element', 'wp-components', 'wp-data', 'wp-core-data', 'wp-block-editor' ), $ver, true );
+		wp_add_inline_script(
+			'clear-eo-editor-fields',
+			'window.clearEoFields = ' . wp_json_encode(
+				array(
+					'title'  => $boxes[ $type ]['title'],
+					'intro'  => wp_kses( $boxes[ $type ]['intro'], array( 'b' => array() ) ),
+					'fields' => $fields,
+					'i18n'   => array(
+						'choose'  => __( 'Choose image', 'clear-eo' ),
+						'replace' => __( 'Replace image', 'clear-eo' ),
+						'remove'  => __( 'Remove', 'clear-eo' ),
+						'up'      => __( 'Move up', 'clear-eo' ),
+						'down'    => __( 'Move down', 'clear-eo' ),
+					),
+				)
+			) . ';',
+			'before'
+		);
 	}
 );

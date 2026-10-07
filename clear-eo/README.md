@@ -25,7 +25,7 @@ The home page is always the one-page layout (`front-page.php`), whatever **Setti
 
 In short text fields, `**double asterisks**` make text bold and `[text](https://link)` makes a link, as in the static site.
 
-In the block editor (WordPress 6.9+/7), the extra fields of each type are in the **Meta Boxes** drawer under the text.
+In the block editor, the extra fields of each type (Event details, Webinar details, Application panel, Partner card, What's new card) are a panel in the sidebar's post settings, and are saved together with the post. The classic editor shows them in a box under the text.
 
 ## Features carried over
 

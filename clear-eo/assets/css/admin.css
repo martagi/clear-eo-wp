@@ -11,3 +11,12 @@
 .ce-row-tools .button-link { text-decoration: none; }
 .ce-sub input[type="text"], .ce-sub textarea { width: 100%; }
 .ce-sub:first-of-type { padding-right: 140px; }
+
+/* The same fields in the block editor's sidebar (assets/js/editor-fields.js) */
+.ce-panel .ce-intro { margin: 0 0 16px; padding: 8px 10px; background: #f0f6fa; border-left: 3px solid #205076; font-size: 12px; }
+.ce-panel-field { margin-bottom: 16px; }
+.ce-panel .ce-row { position: static; display: grid; gap: 8px; padding: 10px; margin-bottom: 10px; }
+.ce-row-actions { display: flex; align-items: center; gap: 2px; }
+.ce-row-actions .components-button.is-link { margin-left: auto; }
+.ce-media-preview { display: block; max-width: 100%; border-radius: 4px; margin-bottom: 8px; }
+.ce-media-remove { margin-left: 10px; }
