@@ -17,6 +17,7 @@ function clear_eo_icon( $name ) {
 		'out'       => '<path d="M7 17 17 7M8 7h9v9"/>',
 		'pin'       => '<path d="M12 22s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/>',
 		'clock'     => '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+		'globe'     => '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
 		'lab'       => '<path d="M9 3h6M10 3v6L4.5 18.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3"/>',
 		'cloud'     => '<path d="M17.5 19a4.5 4.5 0 1 0-1.4-8.8A6 6 0 0 0 4 12a4 4 0 0 0 2 7z"/>',
 		'satellite' => '<path d="M13 7 9 3 5 7l4 4M17 11l4 4-4 4-4-4M8 12l4 4M16 8l-1.5 1.5"/><circle cx="12" cy="12" r="2"/>',
@@ -390,7 +391,8 @@ function clear_eo_article( $n, $title = 'h2' ) {
 	if ( $n['recording'] ) {
 		$actions .= '<a class="link-btn" href="' . esc_url( $n['recording'] ) . '"' . clear_eo_ext( $n['recording'] ) . '>' . esc_html__( 'Watch the recording', 'clear-eo' ) . ' ' . clear_eo_icon( 'out' ) . '</a> ';
 	}
-	if ( $n['link'] ) {
+	// An event's website is shown next to its location instead (see below)
+	if ( $n['link'] && 'event' !== $n['type'] ) {
 		$labels   = array(
 			'event'   => __( 'Event website', 'clear-eo' ),
 			'webinar' => __( 'More information', 'clear-eo' ),
@@ -426,6 +428,9 @@ function clear_eo_article( $n, $title = 'h2' ) {
 		$speakers .= '</ul>';
 	}
 	$sub = clear_eo_sub_line( $n );
+	if ( 'event' === $n['type'] && $n['link'] ) {
+		$sub .= '<a class="sub-link" href="' . esc_url( $n['link'] ) . '"' . clear_eo_ext( $n['link'] ) . '>' . clear_eo_icon( 'globe' ) . esc_html__( 'Event website', 'clear-eo' ) . ' ' . clear_eo_icon( 'out' ) . '</a>';
+	}
 
 	return ( $n['header'] ? '<img class="article-header" src="' . esc_url( $n['header'] ) . '" alt="">' : '' )
 		. '<div class="article-content">'

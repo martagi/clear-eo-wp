@@ -553,6 +553,9 @@ html:has(dialog[open]) { overflow: hidden; }
 .card-sub { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: -4px 0 0; font-size: 13.5px; color: var(--muted); }
 .card-sub span { display: inline-flex; align-items: center; gap: 6px; }
 .card-sub svg { width: 15px; height: 15px; flex: none; }
+.card-sub .sub-link { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-weight: 600; text-decoration: none; }
+.card-sub .sub-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+.card-sub .sub-link svg:last-child { width: 12px; height: 12px; }
 .article-sub { margin: -8px 0 20px; font-size: 15px; }
 .article-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 0 0 28px; }
 .prose + .article-actions, .speakers + .article-actions { margin: 28px 0 0; }
