@@ -32,7 +32,7 @@ In the block editor, the extra fields of each type (Event details, Webinar detai
 - Light and dark themes that follow the system setting, with a toggle the browser remembers.
 - Application tabs with keyboard navigation, and a page for each application.
 - Partner cards whose role and description slide up on hover (shown in the card on touch screens).
-- What's new merges newsletters, events and webinars, newest first, with type filters. Events and webinars that haven't ended get an **Upcoming** badge.
+- What's new merges newsletters, events and webinars, newest first, with type filters. Events and webinars that haven't ended get an **Upcoming** badge, and ended ones a **Past** badge. One with no start date gets neither.
 - Cards open a reader window. Its address `#news/<date>-<title>` can be shared, and old links from the static site still work. Each item also has its own page for search engines and for sharing.
 - Upcoming events and webinars get **Add to Outlook / Teams calendar** and **Download .ics** links (`?clear_eo_ics=<id>`). A webinar time like `14:00–15:30 CET` is added with its hours (Brussels time, or UTC); anything else is added as all-day.
 - Cards with no page link to the registration, recording or website, or to the default link set in the Customizer.

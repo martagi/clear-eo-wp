@@ -99,6 +99,8 @@ function clear_eo_item( WP_Post $p ) {
 		'type'         => $type,
 		'title'        => $title,
 		'date'         => $date,
+		// Events and webinars without a start date fall back to their publish date for sorting, but are never "upcoming"
+		'dated'        => 'news' === $type || (bool) $m( '_ce_date' ),
 		'end_date'     => 'event' === $type ? (string) $m( '_ce_end_date' ) : '',
 		'location'     => 'event' === $type ? (string) $m( '_ce_location' ) : '',
 		'time'         => 'webinar' === $type ? (string) $m( '_ce_time' ) : '',
@@ -141,7 +143,12 @@ function clear_eo_today() {
 
 /** Events and webinars that haven't ended yet. */
 function clear_eo_upcoming( $n ) {
-	return 'news' !== $n['type'] && ( $n['end_date'] ? $n['end_date'] : $n['date'] ) >= clear_eo_today();
+	return 'news' !== $n['type'] && $n['dated'] && ( $n['end_date'] ? $n['end_date'] : $n['date'] ) >= clear_eo_today();
+}
+
+/** Events and webinars that have ended. */
+function clear_eo_past( $n ) {
+	return 'news' !== $n['type'] && $n['dated'] && ! clear_eo_upcoming( $n );
 }
 
 /**
@@ -203,7 +210,12 @@ function clear_eo_fmt_range( $a, $b ) {
 
 /** Type and Upcoming badges with the date. */
 function clear_eo_meta( $n ) {
-	$up = clear_eo_upcoming( $n ) ? '<span class="badge upcoming">' . esc_html__( 'Upcoming', 'clear-eo' ) . '</span>' : '';
+	$up = '';
+	if ( clear_eo_upcoming( $n ) ) {
+		$up = '<span class="badge upcoming">' . esc_html__( 'Upcoming', 'clear-eo' ) . '</span>';
+	} elseif ( clear_eo_past( $n ) ) {
+		$up = '<span class="badge past">' . esc_html__( 'Past', 'clear-eo' ) . '</span>';
+	}
 	return sprintf(
 		'<div class="card-meta"><span class="badges"><span class="badge %1$s">%2$s</span>%3$s</span><time datetime="%4$s">%5$s</time></div>',
 		esc_attr( $n['type'] ),
