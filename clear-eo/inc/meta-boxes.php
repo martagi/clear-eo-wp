@@ -371,9 +371,8 @@ add_action(
 			return;
 		}
 		wp_enqueue_media();
-		$ver = wp_get_theme()->get( 'Version' );
-		wp_enqueue_style( 'clear-eo-admin', get_theme_file_uri( 'assets/css/admin.css' ), array(), $ver );
-		wp_enqueue_script( 'clear-eo-admin', get_theme_file_uri( 'assets/js/admin.js' ), array(), $ver, true );
+		wp_enqueue_style( 'clear-eo-admin', get_theme_file_uri( 'assets/css/admin.css' ), array(), clear_eo_ver( 'assets/css/admin.css' ) );
+		wp_enqueue_script( 'clear-eo-admin', get_theme_file_uri( 'assets/js/admin.js' ), array(), clear_eo_ver( 'assets/js/admin.js' ), true );
 	}
 );
 
@@ -411,9 +410,8 @@ add_action(
 			}
 			$fields[] = $field;
 		}
-		$ver = wp_get_theme()->get( 'Version' );
-		wp_enqueue_style( 'clear-eo-admin', get_theme_file_uri( 'assets/css/admin.css' ), array(), $ver );
-		wp_enqueue_script( 'clear-eo-editor-fields', get_theme_file_uri( 'assets/js/editor-fields.js' ), array( 'wp-plugins', 'wp-editor', 'wp-element', 'wp-components', 'wp-data', 'wp-core-data', 'wp-block-editor' ), $ver, true );
+		wp_enqueue_style( 'clear-eo-admin', get_theme_file_uri( 'assets/css/admin.css' ), array(), clear_eo_ver( 'assets/css/admin.css' ) );
+		wp_enqueue_script( 'clear-eo-editor-fields', get_theme_file_uri( 'assets/js/editor-fields.js' ), array( 'wp-plugins', 'wp-editor', 'wp-element', 'wp-components', 'wp-data', 'wp-core-data', 'wp-block-editor' ), clear_eo_ver( 'assets/js/editor-fields.js' ), true );
 		wp_add_inline_script(
 			'clear-eo-editor-fields',
 			'window.clearEoFields = ' . wp_json_encode(

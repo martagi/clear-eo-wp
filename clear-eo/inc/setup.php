@@ -49,12 +49,20 @@ add_action( 'after_switch_theme', 'flush_rewrite_rules' );
 add_action(
 	'wp_enqueue_scripts',
 	function () {
-		$ver = wp_get_theme()->get( 'Version' );
 		wp_enqueue_style( 'clear-eo-fonts', CLEAR_EO_FONTS, array(), null ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
-		wp_enqueue_style( 'clear-eo', get_stylesheet_uri(), array( 'clear-eo-fonts' ), $ver );
-		wp_enqueue_script( 'clear-eo', get_theme_file_uri( 'assets/js/main.js' ), array(), $ver, array( 'in_footer' => true, 'strategy' => 'defer' ) );
+		wp_enqueue_style( 'clear-eo', get_stylesheet_uri(), array( 'clear-eo-fonts' ), clear_eo_ver( 'style.css' ) );
+		wp_enqueue_script( 'clear-eo', get_theme_file_uri( 'assets/js/main.js' ), array(), clear_eo_ver( 'assets/js/main.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
 	}
 );
+
+/**
+ * Version for a theme file's address: the theme version plus the file's last change, so browsers load
+ * the new copy after every update instead of a cached one.
+ */
+function clear_eo_ver( $file ) {
+	$mtime = @filemtime( get_theme_file_path( $file ) ); // phpcs:ignore WordPress.PHP.NoSilencedErrors
+	return wp_get_theme()->get( 'Version' ) . ( $mtime ? '.' . $mtime : '' );
+}
 
 add_filter(
 	'wp_resource_hints',
