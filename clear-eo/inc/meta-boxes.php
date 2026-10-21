@@ -10,13 +10,31 @@ defined( 'ABSPATH' ) || exit;
 
 function clear_eo_meta_boxes() {
 	$card = array( '_ce_card_image', __( 'Card image', 'clear-eo' ), 'media', __( "Preview picture at the top of the post's card in What's new, cropped to a wide strip. Without one, the card uses the featured image, if any.", 'clear-eo' ) );
-	return array(
+	$boxes = array(
 		'post'              => array(
 			'title'  => __( "What's new card", 'clear-eo' ),
-			'intro'  => __( 'The <b>excerpt</b> is the summary on the card; the <b>featured image</b> is the header across the top of the article (otherwise the Newsletter default from the Customizer).', 'clear-eo' ),
+			'intro'  => __( 'The <b>excerpt</b> is the summary on the card; the <b>featured image</b> is the header across the top of the article (otherwise the default from the Customizer). A post in the <b>Event</b> or <b>Webinar</b> category is shown as an event or a webinar, with the fields below.', 'clear-eo' ),
+			// Per category (see clear_eo_post_kind()): the block editor shows the title and fields that apply
+			'titles' => array(
+				'news'    => __( "What's new card", 'clear-eo' ),
+				'event'   => __( 'Event details', 'clear-eo' ),
+				'webinar' => __( 'Webinar details', 'clear-eo' ),
+			),
 			'fields' => array(
 				$card,
-				array( '_ce_link', __( 'Original post', 'clear-eo' ), 'url', __( 'Optional link shown at the end of the article.', 'clear-eo' ) ),
+				array(
+					'_ce_link',
+					__( 'Link', 'clear-eo' ),
+					'url',
+					__( 'Newsletter: the original post. Event: the event website. Webinar: more information.', 'clear-eo' ),
+					array(),
+					null,
+					array(
+						'news'    => __( 'Original post', 'clear-eo' ),
+						'event'   => __( 'Event website', 'clear-eo' ),
+						'webinar' => __( 'More information', 'clear-eo' ),
+					),
+				),
 			),
 		),
 		'clear_event'       => array(
@@ -109,6 +127,37 @@ function clear_eo_meta_boxes() {
 			),
 		),
 	);
+
+	// Posts in the Event or Webinar category (the old site's way) get the same fields as Events and Webinars.
+	// Index 5 lists the categories a field is for; the block editor shows only those.
+	$pick = function ( $type, $key ) use ( $boxes ) {
+		foreach ( $boxes[ $type ]['fields'] as $f ) {
+			if ( $f[0] === $key ) {
+				return $f;
+			}
+		}
+	};
+	$only = function ( $f, $kinds, $label = null, $help = null ) {
+		$f    = array_pad( $f, 5, '' );
+		$f[1] = $label ? $label : $f[1];
+		$f[3] = null !== $help ? $help : $f[3];
+		$f[4] = $f[4] ? $f[4] : array();
+		$f[5] = $kinds;
+		return $f;
+	};
+	$boxes['post']['fields'] = array_merge(
+		array(
+			$only( $pick( 'clear_event', '_ce_date' ), array( 'event', 'webinar' ), __( 'Date (events: start date)', 'clear-eo' ), __( 'Events and webinars: the day it takes place. Without one, the post date is shown and the post gets no Upcoming or Past badge.', 'clear-eo' ) ),
+			$only( $pick( 'clear_event', '_ce_end_date' ), array( 'event' ) ),
+			$only( $pick( 'clear_event', '_ce_location' ), array( 'event' ) ),
+			$only( $pick( 'clear_webinar', '_ce_time' ), array( 'webinar' ) ),
+			$only( $pick( 'clear_webinar', '_ce_registration' ), array( 'webinar' ) ),
+			$only( $pick( 'clear_webinar', '_ce_recording' ), array( 'webinar' ) ),
+		),
+		$boxes['post']['fields'],
+		array( $only( $pick( 'clear_webinar', '_ce_speakers' ), array( 'webinar' ) ) )
+	);
+	return $boxes;
 }
 
 add_action(
@@ -392,6 +441,8 @@ add_action(
 				'label' => $f[1],
 				'type'  => $f[2],
 				'help'  => isset( $f[3] ) ? $f[3] : '',
+				'only'  => isset( $f[5] ) ? $f[5] : null,
+				'labels' => isset( $f[6] ) ? $f[6] : null,
 			);
 			if ( 'select' === $f[2] ) {
 				$field['choices'] = $f[4];
@@ -417,6 +468,8 @@ add_action(
 			'window.clearEoFields = ' . wp_json_encode(
 				array(
 					'title'  => $boxes[ $type ]['title'],
+					'titles' => isset( $boxes[ $type ]['titles'] ) ? $boxes[ $type ]['titles'] : null,
+					'kinds'  => clear_eo_category_kinds(),
 					'intro'  => wp_kses( $boxes[ $type ]['intro'], array( 'b' => array() ) ),
 					'fields' => $fields,
 					'i18n'   => array(

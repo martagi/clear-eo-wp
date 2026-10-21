@@ -18,6 +18,7 @@ The home page is always the one-page layout (`front-page.php`), whatever **Setti
 | Application tabs and their own pages | **Applications**: excerpt = panel summary, featured image = background, editor = full page, *Application panel* box = tab label, colour, location, list/tag sections. *Order* sets the tab order. |
 | Partner and affiliated-entity cards | **Partners**: featured image = logo, *Partner card* box = country, website, role, hover description, "affiliated entity". *Order* sets the card order. |
 | Newsletter items | **Newsletter** (WordPress Posts): excerpt = card summary, featured image = article header, *What's new card* box = card image and original-post link |
+| Events and webinars as posts | A **Post** in the **event** or **webinar** category (how the old clear-eo.eu site filed them) is shown as an event or a webinar. Its sidebar panel then shows the event or webinar fields; set **Date** to get the Upcoming/Past badge. Other posts are newsletter items. |
 | Events | **Events**: start/end date, location, event website, card image |
 | Webinars | **Webinars**: date, time (`14:00–15:30 CET`), registration, recording, speakers, card image |
 | Menus | **Appearance → Menus**: *Top menu* and *Footer: Explore*. Links like `#about` go to that home-page section from every page. Without a menu, the home-page sections are listed. |

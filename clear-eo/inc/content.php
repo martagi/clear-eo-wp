@@ -60,6 +60,31 @@ function clear_eo_types() {
 	);
 }
 
+/**
+ * Category slugs that make a post an event or a webinar, as on the old CLEAR-EO site, where everything was a
+ * post filed under "event", "webinar" or "Newsletter". Filter: clear_eo_category_kinds.
+ */
+function clear_eo_category_kinds() {
+	return apply_filters(
+		'clear_eo_category_kinds',
+		array(
+			'event'   => array( 'event', 'events' ),
+			'webinar' => array( 'webinar', 'webinars' ),
+		)
+	);
+}
+
+/** "event" or "webinar" for a post in one of those categories (event wins if both), otherwise "news". */
+function clear_eo_post_kind( WP_Post $p ) {
+	$slugs = wp_list_pluck( get_the_category( $p->ID ), 'slug' );
+	foreach ( clear_eo_category_kinds() as $kind => $kind_slugs ) {
+		if ( array_intersect( $slugs, $kind_slugs ) ) {
+			return $kind;
+		}
+	}
+	return 'news';
+}
+
 function clear_eo_type_label( $type ) {
 	$l = array(
 		'news'    => __( 'Newsletter', 'clear-eo' ),
@@ -78,7 +103,7 @@ function clear_eo_slug( $date, $title ) {
 /** A newsletter post, event or webinar as the array the templates use. */
 function clear_eo_item( WP_Post $p ) {
 	$types = clear_eo_types();
-	$type  = $types[ $p->post_type ];
+	$type  = 'post' === $p->post_type ? clear_eo_post_kind( $p ) : $types[ $p->post_type ];
 	$m     = function ( $k ) use ( $p ) {
 		return get_post_meta( $p->ID, $k, true );
 	};

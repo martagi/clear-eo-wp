@@ -53,13 +53,29 @@
       h(Button, { variant: 'secondary', onClick: () => onChange(rows.concat([blank])) }, f.add));
   };
 
+  // Posts: "event" or "webinar" when filed in one of those categories (as on the old site), else "news".
+  // Follows the categories ticked in the editor, so the fields change as soon as one is ticked.
+  const useKind = () => data.useSelect(s => {
+    if (!cfg.kinds) return null;
+    const ids = s('core/editor').getEditedPostAttribute('categories') || [];
+    if (!ids.length) return 'news';
+    const terms = s('core').getEntityRecords('taxonomy', 'category', { include: ids, per_page: 100, context: 'view' }) || [];
+    const slugs = terms.map(t => t.slug);
+    const kind = Object.keys(cfg.kinds).find(k => cfg.kinds[k].some(x => slugs.includes(x)));
+    return kind || 'news';
+  }, []);
+
   const Fields = () => {
     const meta = data.useSelect(s => s('core/editor').getEditedPostAttribute('meta') || {}, []);
+    const kind = useKind();
     const { editPost } = data.useDispatch('core/editor');
     const set = (k, v) => editPost({ meta: { [k]: v } });
-    return h(Panel, { name: 'clear-eo-fields', title: cfg.title, className: 'ce-panel' },
+    const fields = cfg.fields
+      .filter(f => !kind || !f.only || f.only.includes(kind))
+      .map(f => (kind && f.labels && f.labels[kind] ? { ...f, label: f.labels[kind], help: '' } : f));
+    return h(Panel, { name: 'clear-eo-fields', title: (kind && cfg.titles && cfg.titles[kind]) || cfg.title, className: 'ce-panel' },
       cfg.intro ? h(element.RawHTML, { className: 'ce-intro' }, cfg.intro) : null,
-      cfg.fields.map(f => h('div', { key: f.key, className: 'ce-panel-field' },
+      fields.map(f => h('div', { key: f.key, className: 'ce-panel-field' },
         f.type === 'repeater'
           ? h(Repeater, { f, value: meta[f.key], onChange: v => set(f.key, v) })
           : h(Input, { f, value: meta[f.key], onChange: v => set(f.key, v) }))));
