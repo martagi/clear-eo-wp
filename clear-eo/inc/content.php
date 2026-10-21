@@ -76,7 +76,12 @@ function clear_eo_category_kinds() {
 
 /** "event" or "webinar" for a post in one of those categories (event wins if both), otherwise "news". */
 function clear_eo_post_kind( WP_Post $p ) {
-	$slugs = wp_list_pluck( get_the_category( $p->ID ), 'slug' );
+	// Match the slug or the name ("webinar" may have been given a slug like webinar-2)
+	$slugs = array();
+	foreach ( get_the_category( $p->ID ) as $c ) {
+		$slugs[] = $c->slug;
+		$slugs[] = sanitize_title( $c->name );
+	}
 	foreach ( clear_eo_category_kinds() as $kind => $kind_slugs ) {
 		if ( array_intersect( $slugs, $kind_slugs ) ) {
 			return $kind;

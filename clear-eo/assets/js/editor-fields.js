@@ -60,7 +60,8 @@
     const ids = s('core/editor').getEditedPostAttribute('categories') || [];
     if (!ids.length) return 'news';
     const terms = s('core').getEntityRecords('taxonomy', 'category', { include: ids, per_page: 100, context: 'view' }) || [];
-    const slugs = terms.map(t => t.slug);
+    // Slug or name: "webinar" may have been given a slug like webinar-2
+    const slugs = terms.flatMap(t => [t.slug, String(t.name || '').toLowerCase().trim().replace(/\s+/g, '-')]);
     const kind = Object.keys(cfg.kinds).find(k => cfg.kinds[k].some(x => slugs.includes(x)));
     return kind || 'news';
   }, []);

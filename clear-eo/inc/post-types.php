@@ -225,3 +225,119 @@ add_action(
 		}
 	}
 );
+
+/* ---------- Every What's new item is filed under its type's category ---------- */
+
+/** The category each type is filed under: slug and the name used if it has to be created. */
+function clear_eo_type_categories() {
+	return apply_filters(
+		'clear_eo_type_categories',
+		array(
+			'news'    => array( 'newsletter', __( 'Newsletter', 'clear-eo' ) ),
+			'event'   => array( 'event', __( 'Event', 'clear-eo' ) ),
+			'webinar' => array( 'webinar', __( 'Webinar', 'clear-eo' ) ),
+		)
+	);
+}
+
+/**
+ * Adds the category of the item's type (Newsletter, event or webinar), creating it if needed, and takes
+ * "Uncategorized" off. A post's type comes from its categories (clear_eo_post_kind()), so a post in the
+ * event or webinar category stays an event or webinar, and any other post is a newsletter item.
+ *
+ * @return bool Whether the categories changed.
+ */
+function clear_eo_file_under_type( $post_id ) {
+	$post  = get_post( $post_id );
+	$types = clear_eo_types();
+	if ( ! $post || ! isset( $types[ $post->post_type ] ) || in_array( $post->post_status, array( 'auto-draft', 'trash', 'inherit' ), true ) ) {
+		return false;
+	}
+	$kind = 'post' === $post->post_type ? clear_eo_post_kind( $post ) : $types[ $post->post_type ];
+	list( $slug, $name ) = clear_eo_type_categories()[ $kind ];
+	$term = clear_eo_find_category( $slug, $name );
+	if ( ! $term ) {
+		$made = wp_insert_term( $name, 'category', array( 'slug' => $slug ) );
+		if ( is_wp_error( $made ) ) {
+			return false;
+		}
+		$term = get_term( $made['term_id'], 'category' );
+	}
+	$ids  = wp_get_post_categories( $post_id );
+	$want = array_values( array_unique( array_merge( array_diff( $ids, array( (int) get_option( 'default_category' ) ) ), array( (int) $term->term_id ) ) ) );
+	sort( $ids );
+	sort( $want );
+	if ( $ids === $want ) {
+		return false;
+	}
+	wp_set_post_categories( $post_id, $want );
+	return true;
+}
+
+/** An existing category with this slug, or failing that this name (in any letter case). */
+function clear_eo_find_category( $slug, $name ) {
+	$term = get_term_by( 'slug', $slug, 'category' );
+	if ( $term ) {
+		return $term;
+	}
+	foreach ( get_terms( array( 'taxonomy' => 'category', 'hide_empty' => false ) ) as $t ) {
+		if ( sanitize_title( $t->name ) === $slug || 0 === strcasecmp( $t->name, $name ) ) {
+			return $t;
+		}
+	}
+	return null;
+}
+
+// On every save, from either editor or the importer (this runs after the post's own categories are saved)
+add_action(
+	'wp_after_insert_post',
+	function ( $post_id ) {
+		clear_eo_file_under_type( $post_id );
+	},
+	20
+);
+
+// Once, for the items already on the site: file them all, then tell the administrator how many changed
+add_action(
+	'admin_init',
+	function () {
+		if ( get_option( 'clear_eo_filed_by_type' ) || ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		$ids     = get_posts(
+			array(
+				'post_type'   => array_keys( clear_eo_types() ),
+				'post_status' => array( 'publish', 'future', 'draft', 'pending', 'private' ),
+				'numberposts' => -1,
+				'fields'      => 'ids',
+			)
+		);
+		$changed = 0;
+		foreach ( $ids as $id ) {
+			$changed += clear_eo_file_under_type( $id ) ? 1 : 0;
+		}
+		update_option( 'clear_eo_filed_by_type', array( 'time' => time(), 'changed' => $changed ), false );
+		set_transient( 'clear_eo_filed_notice', $changed, HOUR_IN_SECONDS );
+	}
+);
+
+add_action(
+	'admin_notices',
+	function () {
+		$changed = get_transient( 'clear_eo_filed_notice' );
+		if ( false === $changed || ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		delete_transient( 'clear_eo_filed_notice' );
+		printf(
+			'<div class="notice notice-success is-dismissible"><p>%s</p></div>',
+			esc_html(
+				sprintf(
+					/* translators: %d: number of items */
+					_n( 'CLEAR-EO: %d newsletter item, event or webinar was filed under its category (Newsletter, event or webinar).', 'CLEAR-EO: %d newsletter items, events and webinars were filed under their category (Newsletter, event or webinar).', (int) $changed, 'clear-eo' ),
+					(int) $changed
+				)
+			)
+		);
+	}
+);
