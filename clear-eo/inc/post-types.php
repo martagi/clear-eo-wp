@@ -15,10 +15,12 @@ defined( 'ABSPATH' ) || exit;
 add_action(
 	'init',
 	function () {
+		// Like posts: an author, categories and tags (the admin lists show them as columns)
 		$common = array(
 			'public'       => true,
 			'show_in_rest' => true,
-			'supports'     => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'custom-fields' ),
+			'supports'     => array( 'title', 'editor', 'excerpt', 'thumbnail', 'author', 'revisions', 'custom-fields' ),
+			'taxonomies'   => array( 'category', 'post_tag' ),
 		);
 
 		register_post_type(
@@ -191,6 +193,17 @@ foreach ( array( 'clear_partner', 'clear_application' ) as $clear_eo_pt ) {
 	);
 }
 unset( $clear_eo_pt );
+
+// Category and tag pages on the site list events and webinars too, not only posts
+add_action(
+	'pre_get_posts',
+	function ( WP_Query $q ) {
+		if ( is_admin() || ! $q->is_main_query() || ! ( $q->is_category() || $q->is_tag() ) || $q->get( 'post_type' ) ) {
+			return;
+		}
+		$q->set( 'post_type', array( 'post', 'clear_event', 'clear_webinar' ) );
+	}
+);
 
 add_action(
 	'pre_get_posts',
