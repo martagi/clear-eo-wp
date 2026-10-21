@@ -146,6 +146,34 @@ foreach ( array( 'clear_event', 'clear_webinar' ) as $clear_eo_pt ) {
 			return $out;
 		}
 	);
+	if ( 'clear_event' === $clear_eo_pt ) {
+		// Events: where it takes place, after the date
+		add_filter(
+			'manage_clear_event_posts_columns',
+			function ( $cols ) {
+				$out = array();
+				foreach ( $cols as $k => $v ) {
+					$out[ $k ] = $v;
+					if ( 'ce_date' === $k ) {
+						$out['ce_location'] = __( 'Location', 'clear-eo' );
+					}
+				}
+				return $out;
+			},
+			11
+		);
+		add_action(
+			'manage_clear_event_posts_custom_column',
+			function ( $col, $id ) {
+				if ( 'ce_location' === $col ) {
+					$loc = get_post_meta( $id, '_ce_location', true );
+					echo $loc ? esc_html( $loc ) : '<span aria-hidden="true">—</span>';
+				}
+			},
+			10,
+			2
+		);
+	}
 	add_action(
 		"manage_{$clear_eo_pt}_posts_custom_column",
 		function ( $col, $id ) {
