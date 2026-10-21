@@ -197,12 +197,12 @@ img, svg { display: block; max-width: 100%; }
 /* ---------- Facts band ---------- */
 .facts { margin-top: -46px; position: relative; z-index: 2; }
 .facts-grid {
-  display: grid; grid-template-columns: repeat(5, 1fr);
+  display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr);  /* one column per fact, however many */
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow);
 }
 .fact { padding: 24px 22px; border-left: 1px solid var(--line); }
 .fact:first-child { border-left: 0; }
-.fact b { display: block; font: 700 clamp(26px, 3vw, 34px)/1.1 var(--display); letter-spacing: -0.02em; }
+.fact b { display: block; font: 700 clamp(26px, 3vw, 34px)/1.1 var(--display); letter-spacing: -0.02em; white-space: nowrap; }
 .fact span { color: var(--muted); font-size: 14px; }
 /* A fact with details: the label next to the value, the details underneath */
 .fact-top { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
@@ -210,11 +210,13 @@ img, svg { display: block; max-width: 100%; }
 .fact.has-detail small { display: block; margin-top: 8px; color: var(--muted); font-size: 14px; line-height: 1.45; }
 .fact.has-detail small span { white-space: nowrap; color: inherit; font-size: inherit; }
 @media (max-width: 900px) {
-  .facts-grid { grid-template-columns: repeat(2, 1fr); }
+  .facts-grid { grid-auto-flow: row; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fact { padding: 20px 16px; }
+  .fact b { font-size: min(26px, 6vw); }  /* values like 2025 – 2028 stay on one line on small phones */
   .fact { border-left: 0; border-top: 1px solid var(--line); }
   .fact:nth-child(-n+2) { border-top: 0; }
   .fact:nth-child(even) { border-left: 1px solid var(--line); }
-  .fact:last-child { grid-column: 1 / -1; border-left: 0; }
+  .fact:last-child:nth-child(odd) { grid-column: 1 / -1; border-left: 0; }  /* an odd one out spans the row */
 }
 
 /* ---------- Sections ---------- */

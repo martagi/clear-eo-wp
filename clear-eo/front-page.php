@@ -72,8 +72,12 @@ $clear_eo_aff      = clear_eo_partners( true );
 					<?php if ( $clear_eo_detail ) : ?>
 						<div class="fact has-detail">
 							<div class="fact-top"><b><?php echo esc_html( $clear_eo_v ); ?></b><span><?php echo esc_html( clear_eo_get( "site:facts.$clear_eo_i.label" ) ); ?></span></div>
-							<?php // Items separated by "·" stay whole: lines break only between them ?>
-							<small><?php echo implode( ' · ', array_map( function ( $x ) { return '<span>' . clear_eo_md( trim( $x ) ) . '</span>'; }, explode( '·', clear_eo_get( "site:facts.$clear_eo_i.detail" ) ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></small>
+							<?php
+							// Items separated by "·" stay whole and keep their dot, so lines break only after a dot
+							$clear_eo_parts = array_map( 'trim', explode( '·', clear_eo_get( "site:facts.$clear_eo_i.detail" ) ) );
+							$clear_eo_last  = count( $clear_eo_parts ) - 1;
+							?>
+							<small><?php echo implode( ' ', array_map( function ( $x, $k ) use ( $clear_eo_last ) { return '<span>' . clear_eo_md( $x ) . ( $k < $clear_eo_last ? '&nbsp;·' : '' ) . '</span>'; }, $clear_eo_parts, array_keys( $clear_eo_parts ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></small>
 						</div>
 					<?php else : ?>
 						<div class="fact"><b><?php echo esc_html( $clear_eo_v ); ?></b><span><?php echo esc_html( clear_eo_get( "site:facts.$clear_eo_i.label" ) ); ?></span></div>
