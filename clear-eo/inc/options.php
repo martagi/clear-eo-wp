@@ -55,6 +55,8 @@ function clear_eo_fields() {
 		$facts[ "site:facts.$i.value" ] = array( sprintf( __( 'Fact %d: value', 'clear-eo' ), $i + 1 ), 'text' );
 		/* translators: %d: fact number */
 		$facts[ "site:facts.$i.label" ] = array( sprintf( __( 'Fact %d: label', 'clear-eo' ), $i + 1 ), 'text' );
+		/* translators: %d: fact number */
+		$facts[ "site:facts.$i.detail" ] = array( sprintf( __( 'Fact %d: details under it (optional; the label then sits next to the value)', 'clear-eo' ), $i + 1 ), 'text' );
 	}
 
 	$about = array(

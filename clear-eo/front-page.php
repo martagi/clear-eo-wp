@@ -68,7 +68,16 @@ $clear_eo_aff      = clear_eo_partners( true );
 						continue;
 					}
 					?>
-					<div class="fact"><b><?php echo esc_html( $clear_eo_v ); ?></b><span><?php echo esc_html( clear_eo_get( "site:facts.$clear_eo_i.label" ) ); ?></span></div>
+					<?php $clear_eo_detail = clear_eo_get( "site:facts.$clear_eo_i.detail" ); ?>
+					<?php if ( $clear_eo_detail ) : ?>
+						<div class="fact has-detail">
+							<div class="fact-top"><b><?php echo esc_html( $clear_eo_v ); ?></b><span><?php echo esc_html( clear_eo_get( "site:facts.$clear_eo_i.label" ) ); ?></span></div>
+							<?php // Items separated by "·" stay whole: lines break only between them ?>
+							<small><?php echo implode( ' · ', array_map( function ( $x ) { return '<span>' . clear_eo_md( trim( $x ) ) . '</span>'; }, explode( '·', clear_eo_get( "site:facts.$clear_eo_i.detail" ) ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></small>
+						</div>
+					<?php else : ?>
+						<div class="fact"><b><?php echo esc_html( $clear_eo_v ); ?></b><span><?php echo esc_html( clear_eo_get( "site:facts.$clear_eo_i.label" ) ); ?></span></div>
+					<?php endif; ?>
 				<?php endfor; ?>
 			</div>
 		</div>

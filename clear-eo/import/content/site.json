@@ -24,7 +24,8 @@
   "facts": [
     {
       "value": "3",
-      "label": "Applications"
+      "label": "Applications",
+      "detail": "Flooding · Agriculture · Air quality"
     },
     {
       "value": "9 + 2",
