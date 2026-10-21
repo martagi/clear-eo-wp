@@ -270,7 +270,7 @@ function clear_eo_type_categories() {
 
 /**
  * Adds the category of the item's type (Newsletter, event or webinar), creating it if needed, and takes
- * "Uncategorized" off. A post's type comes from its categories (clear_eo_post_kind()), so a post in the
+ * "Uncategorized" and the other two types' categories off. A post's type comes from its categories (clear_eo_post_kind()), so a post in the
  * event or webinar category stays an event or webinar, and any other post is a newsletter item.
  *
  * @return bool Whether the categories changed.
@@ -291,8 +291,16 @@ function clear_eo_file_under_type( $post_id ) {
 		}
 		$term = get_term( $made['term_id'], 'category' );
 	}
+	// Only its own type's category: take off Uncategorized and the other two types' categories
+	$drop = array( (int) get_option( 'default_category' ) );
+	foreach ( clear_eo_type_categories() as $other => $c ) {
+		$t = $other !== $kind ? clear_eo_find_category( $c[0], $c[1] ) : null;
+		if ( $t ) {
+			$drop[] = (int) $t->term_id;
+		}
+	}
 	$ids  = wp_get_post_categories( $post_id );
-	$want = array_values( array_unique( array_merge( array_diff( $ids, array( (int) get_option( 'default_category' ) ) ), array( (int) $term->term_id ) ) ) );
+	$want = array_values( array_unique( array_merge( array_diff( $ids, $drop ), array( (int) $term->term_id ) ) ) );
 	sort( $ids );
 	sort( $want );
 	if ( $ids === $want ) {

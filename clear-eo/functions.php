@@ -13,7 +13,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-foreach ( array( 'markdown', 'options', 'setup', 'post-types', 'meta-boxes', 'content', 'importer' ) as $clear_eo_file ) {
+foreach ( array( 'markdown', 'options', 'setup', 'post-types', 'meta-boxes', 'content', 'importer', 'merge' ) as $clear_eo_file ) {
 	require_once get_theme_file_path( "inc/$clear_eo_file.php" );
 }
 unset( $clear_eo_file );

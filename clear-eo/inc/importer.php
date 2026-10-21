@@ -59,7 +59,9 @@ function clear_eo_import_page() {
 	echo '<p>' . esc_html__( 'The texts of the page sections (top banner, key facts, About, Virtual Observatory, footer…) are already in place: change them under Appearance → Customize → CLEAR-EO page sections.', 'clear-eo' ) . '</p>';
 	echo '<form method="post">';
 	wp_nonce_field( 'clear_eo_import' );
-	echo '<p><button class="button button-primary" name="clear_eo_import" value="1">' . esc_html__( 'Import CLEAR-EO content', 'clear-eo' ) . '</button></p></form></div>';
+	echo '<p><button class="button button-primary" name="clear_eo_import" value="1">' . esc_html__( 'Import CLEAR-EO content', 'clear-eo' ) . '</button></p></form>';
+	clear_eo_merge_section();
+	echo '</div>';
 }
 
 /** Runs the import and returns a log, one line per step. */
